@@ -8,11 +8,15 @@ export const store = createStore({
   //basic data structure
   articles: [],
   currentArticle: false,
+  comments: [],
+  loadingArticles: false,
+  loadingComments: false,
   comments: []
 });
 
 //methods
 export const getArticles = async () => {
+  store.loadingArticles = true;
   const articleIds = await fetch(topArticlesUrl).then((r) => r.json());
   store.articles = await Promise.all(
     articleIds
@@ -20,4 +24,16 @@ export const getArticles = async () => {
       .map((id) => generateItemUrl(id))
       .map((url) => fetch(url).then((r) => r.json()))
   );
+  store.loadingArticles = false;
+};
+
+export const currentComment = async (article) => {
+  store.loadingComments = true;
+  store.currentArticles = article;
+  store.currentArticles.comments = await Promise.all(
+    store.currentArticles.kids
+      .map((id) => generateItemUrl(id))
+      .map((url) => fetch(url).then((r) => r.json()))
+  );
+  store.loadingComments = false;
 };

@@ -1,12 +1,8 @@
-import Link from 'next/link'
+import React from "react";
+import { view } from "@risingstack/react-easy-state";
 
-export default function IndexPage() {
-  return (
-    <div>
-      Hello World.{' '}
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </div>
-  )
-}
+import store from "../easyState/store/index";
+
+export default view(() => (
+  <button onClick={store.increment}>{store.num}</button>
+));

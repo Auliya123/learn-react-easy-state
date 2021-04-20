@@ -7,7 +7,7 @@ const IndexPage = () => {
   useEffect(() => {
     getArticles();
   });
-  return <pre>{JSON.stringify(store.articles)}</pre>;
+  return <pre>{JSON.stringify(store.articles, null, 2)}</pre>; //null and 2 to make data prettier
 };
 
 export default view(IndexPage);

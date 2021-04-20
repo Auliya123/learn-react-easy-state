@@ -14,5 +14,10 @@ export const store = createStore({
 //methods
 export const getArticles = async () => {
   const articleIds = await fetch(topArticlesUrl).then((r) => r.json());
-  store.articles = articleIds;
+  store.articles = await Promise.all(
+    articleIds
+      .slice(0, 10)
+      .map((id) => generateItemUrl(id))
+      .map((url) => fetch(url).then((r) => r.json()))
+  );
 };

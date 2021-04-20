@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { view } from "@risingstack/react-easy-state";
 
-import store from "../easyState/store/index";
+import { store, getArticles } from "../easyState/store/index";
 
-export default view(() => (
-  <button onClick={store.increment}>{store.num}</button>
-));
+const IndexPage = () => {
+  useEffect(() => {
+    getArticles();
+  });
+  return <pre>{JSON.stringify(store.articles)}</pre>;
+};
+
+export default view(IndexPage);
